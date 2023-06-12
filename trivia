@@ -1,0 +1,114 @@
+import pickle
+
+
+def save_questions(questions, filename):
+
+    with open(filename, 'wb') as file:
+
+        pickle.dump(questions, file)
+
+
+def load_questions(filename):
+
+    with open(filename, 'rb') as file:
+
+        questions = pickle.load(file)
+
+    return questions
+
+
+def play_trivia(questions):
+
+    score = 0
+
+    total_questions = len(questions)
+
+
+    for question in questions:
+
+        print(question['question'])
+
+        for i, option in enumerate(question['options']):
+
+            print(f"{i + 1}. {option}")
+
+
+        answer = input("Enter your answer (1-4): ")
+
+        if answer == str(question['correct_answer']):
+
+            print("Correct!")
+
+            score += 1
+
+        else:
+
+            print("Incorrect!")
+
+
+    print("\nTrivia Complete!")
+
+    print(f"Your score: {score}/{total_questions}")
+
+
+def main():
+
+    # Example trivia questions
+
+    questions = [
+
+        {
+
+            'question': 'What is the capital of France?',
+
+            'options': ['London', 'Paris', 'Berlin', 'Madrid'],
+
+            'correct_answer': 2
+
+        },
+
+        {
+
+            'question': 'Who painted the Mona Lisa?',
+
+            'options': ['Leonardo da Vinci', 'Pablo Picasso', 'Vincent van Gogh', 'Michelangelo'],
+
+            'correct_answer': 1
+
+        },
+
+        {
+
+            'question': 'What is the largest planet in our solar system?',
+
+            'options': ['Mars', 'Venus', 'Jupiter', 'Saturn'],
+
+            'correct_answer': 3
+
+        }
+
+    ]
+
+
+    # Save questions to a file
+
+    save_questions(questions, 'questions.pickle')
+
+    print('Questions saved.')
+
+
+    # Load questions from the file
+
+    loaded_questions = load_questions('questions.pickle')
+
+    print('Questions loaded.')
+
+
+    # Play trivia game
+
+    play_trivia(loaded_questions)
+
+
+if __name__ == '__main__':
+
+    main() 
